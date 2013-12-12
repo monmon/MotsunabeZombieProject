@@ -11,6 +11,10 @@ class Tweet
 
     public function __construct($str)
     {
+        if (strpos($str, self::DELIMITER) === false) {
+            throw new \InvalidArgumentException("Invalid: $str");
+        }
+
         list($this->_screenName, $this->_body) = explode(self::DELIMITER, $str, 2);
     }
 

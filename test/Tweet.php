@@ -26,4 +26,16 @@ class Tweetextends extends PHPUnit_Framework_TestCase
             array('普通のTweetとではないと判定できるか', false, "monmon\t#hashtab これはhashtagのtweetです"),
         );
     }
+
+    public function test_文字列が対応していない場合にはexceptionにする()
+    {
+        $actual = false;
+        try {
+            new Tweet('monmonの文字列');
+        } catch (InvalidArgumentException $e) {
+            $actual = true;
+        }
+
+        $this->assertTrue($actual, '例外が起きたか');
+    }
 }
