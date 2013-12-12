@@ -4,7 +4,7 @@ require __DIR__ . '/../src/VOYAGE/Tweet.php';
 
 use \VOYAGE\Tweet;
 
-class Tweetextends extends PHPUnit_Framework_TestCase
+class TweetTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider data_tweet
