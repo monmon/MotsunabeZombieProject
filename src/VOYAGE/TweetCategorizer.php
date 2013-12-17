@@ -15,5 +15,8 @@ class TweetCategorizer
         if ($tweetObject->isNormal()) {
             return "Normal\t" . $tweetObject->getBody();
         }
+        if ($tweetObject->isHashTag()) {
+            return "!HashTag\t" . $tweetObject->getBody();
+        }
     }
 }
