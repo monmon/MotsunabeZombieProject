@@ -33,38 +33,22 @@ class Tweet
 
     public function isNormal()
     {
-        if ($this->_hashTag || $this->_reply || $this->_mention) {
-            return false;
-        }
-
-        return true;
+        return !$this->_hashTag && !$this->_reply && !$this->_mention;
     }
 
     public function isHashTag()
     {
-        if ($this->_hashTag) {
-            return true;
-        }
-
-        return false;
+        return !!$this->_hashTag;
     }
 
     public function isReply()
     {
-        if ($this->_reply) {
-            return true;
-        }
-
-        return false;
+        return !!$this->_reply;
     }
 
     public function isMention()
     {
-        if ($this->_mention) {
-            return true;
-        }
-
-        return false;
+        return !!$this->_mention;
     }
 
     protected function _sift()
