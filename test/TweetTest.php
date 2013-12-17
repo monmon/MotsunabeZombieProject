@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/../src/VOYAGE/Tweet.php';
+require_once __DIR__ . '/../src/VOYAGE/Tweet.php';
 
 use \VOYAGE\Tweet;
 
