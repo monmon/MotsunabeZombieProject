@@ -8,21 +8,30 @@ use \VOYAGE\Tweet;
 
 class TweetCategorizer
 {
+    const CATEGORIZED_FORMAT = "%s\t%s";
+
+    protected $_tweetObject;
+
     public function categorize($tweetString)
     {
-        $tweetObject = new Tweet($tweetString);
+        $this->_tweetObject = new Tweet($tweetString);
 
-        if ($tweetObject->isNormal()) {
-            return "Normal\t" . $tweetObject->getBody();
+        if ($this->_tweetObject->isNormal()) {
+            return $this->_createCategorizedString('Normal');
         }
-        if ($tweetObject->isHashTag()) {
-            return "!HashTag\t" . $tweetObject->getBody();
+        if ($this->_tweetObject->isHashTag()) {
+            return $this->_createCategorizedString('!HashTag');
         }
-        if ($tweetObject->isReply()) {
-            return "Reply\t" . $tweetObject->getBody();
+        if ($this->_tweetObject->isReply()) {
+            return $this->_createCategorizedString('Reply');
         }
-        if ($tweetObject->isMention()) {
-            return "Mention\t" . $tweetObject->getBody();
+        if ($this->_tweetObject->isMention()) {
+            return $this->_createCategorizedString('Mention');
         }
+    }
+
+    protected function _createCategorizedString($category)
+    {
+        return sprintf(self::CATEGORIZED_FORMAT, $category, $this->_tweetObject->getBody());
     }
 }
