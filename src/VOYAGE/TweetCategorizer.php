@@ -21,5 +21,8 @@ class TweetCategorizer
         if ($tweetObject->isReply()) {
             return "Reply\t" . $tweetObject->getBody();
         }
+        if ($tweetObject->isMention()) {
+            return "Mention\t" . $tweetObject->getBody();
+        }
     }
 }

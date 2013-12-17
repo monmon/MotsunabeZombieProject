@@ -26,4 +26,11 @@ class TweetCategorizerTest extends PHPUnit_Framework_TestCase
 
          $this->assertSame("Reply\t@tweet あいうえお", $tweetCategorizer->categorize("Alice\t@tweet あいうえお"), 'http://redmine.cs.is.saga-u.ac.jp/issues/3');
     }
+
+    public function test_Tweetがmentionを含んでいた場合、mentionを表す「Mention」をTweetの先頭に付け、Tweetとの間をタブ文字で区切って返せる()
+    {
+         $tweetCategorizer = new TweetCategorizer();
+
+         $this->assertSame("Mention\tmention @tweet あいうえお", $tweetCategorizer->categorize("Alice\tmention @tweet あいうえお"), 'http://redmine.cs.is.saga-u.ac.jp/issues/4');
+    }
 }
