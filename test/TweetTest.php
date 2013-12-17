@@ -67,4 +67,10 @@ class TweetTest extends PHPUnit_Framework_TestCase
         $this->assertSame(true, $tweet->isMention(), 'mentionの判定ができるか');
     }
 
+    public function test_hashTagやreplyやmentionなど複数付いたTweetを取り込むとそれぞれ判定できる()
+    {
+        $tweet = new Tweet("monmon\t@twitter よう！ @mention これはmentionのtweetです #hashtag");
+
+        $this->assertSame(true, $tweet->isMention() && $tweet->isHashTag() && $tweet->isReply(), 'mention, hashtag, replyの判定ができるか');
+    }
 }
