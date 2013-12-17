@@ -46,6 +46,15 @@ class Tweet
         return false;
     }
 
+    public function isReply()
+    {
+        if (preg_match('/^@/', $this->_body)) {
+            return true;
+        }
+
+        return false;
+    }
+
     protected function _pickOutHashTag()
     {
         // note. hash tagは#から始まり、空白の前まで
