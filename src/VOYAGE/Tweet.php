@@ -19,9 +19,11 @@ class Tweet
         }
 
         list($this->_screenName, $this->_body) = explode(self::DELIMITER, $str, 2);
-        $this->_hashTag = $this->_pickOutHashTag();
-        $this->_reply = $this->_pickOutReply();
-        $this->_mention = $this->_pickOutMention();
+
+        $siftedBody = $this->_sift();
+        $this->_hashTag = $siftedBody['hashTag'];
+        $this->_reply   = $siftedBody['reply'];
+        $this->_mention = $siftedBody['mention'];
     }
 
     public function getBody()
@@ -65,33 +67,28 @@ class Tweet
         return false;
     }
 
-    protected function _pickOutHashTag()
+    protected function _sift()
     {
-        // note. hash tagは#から始まり、空白の前まで
-        if (!preg_match('/#([^\s]+)/', $this->_body, $m)) {
-            return;
+        $sifted = array(
+            'hashTag' => null,
+            'reply'   => null,
+            'mention' => null,
+        );
+
+        if (!preg_match_all('/#[^\s]+|^@[^\s]+|\s@[^\s]+/u', $this->_body, $m)) {
+            return $sifted;
         }
 
-        return $m[1];
-    }
-
-    protected function _pickOutReply()
-    {
-        // note. replyは@から始まり、空白の前まで
-        if (!preg_match('/^@([^\s]+)/', $this->_body, $m)) {
-            return;
+        foreach ($m[0] as $symbol) {
+            if (strpos($symbol, '#') === 0) {
+                $sifted['hashTag'] = $symbol;
+            } elseif (strpos($symbol, '@') === 0) {
+                $sifted['reply'] = $symbol;
+            } else {
+                $sifted['mention'] = $symbol;
+            }
         }
 
-        return $m[1];
-    }
-
-    protected function _pickOutMention()
-    {
-        // note. mentionは@が先頭に来ず、その前に空白がある
-        if (!preg_match('/\s@([^\s]+)/', $this->_body, $m)) {
-            return;
-        }
-
-        return $m[1];
+        return $sifted;
     }
 }
