@@ -10,6 +10,7 @@ class Tweet
     protected $_body;
     protected $_hashTag;
     protected $_reply;
+    protected $_mention;
 
     public function __construct($str)
     {
@@ -20,6 +21,7 @@ class Tweet
         list($this->_screenName, $this->_body) = explode(self::DELIMITER, $str, 2);
         $this->_hashTag = $this->_pickOutHashTag();
         $this->_reply = $this->_pickOutReply();
+        $this->_mention = $this->_pickOutMention();
     }
 
     public function getBody()
@@ -29,13 +31,7 @@ class Tweet
 
     public function isNormal()
     {
-        if (preg_match('/@/', $this->_body)) {
-            return false;
-        }
-        if ($this->_hashTag) {
-            return false;
-        }
-        if ($this->_reply) {
+        if ($this->_hashTag || $this->_reply || $this->_mention) {
             return false;
         }
 
@@ -62,8 +58,7 @@ class Tweet
 
     public function isMention()
     {
-        // note. mentionは@が先頭に来ず、その前に空白がある
-        if (preg_match('/\s@([^\s]+)/', $this->_body)) {
+        if ($this->_mention) {
             return true;
         }
 
@@ -84,6 +79,16 @@ class Tweet
     {
         // note. replyは@から始まり、空白の前まで
         if (!preg_match('/^@([^\s]+)/', $this->_body, $m)) {
+            return;
+        }
+
+        return $m[1];
+    }
+
+    protected function _pickOutMention()
+    {
+        // note. mentionは@が先頭に来ず、その前に空白がある
+        if (!preg_match('/\s@([^\s]+)/', $this->_body, $m)) {
             return;
         }
 
