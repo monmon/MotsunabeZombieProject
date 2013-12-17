@@ -60,4 +60,11 @@ class TweetTest extends PHPUnit_Framework_TestCase
         $this->assertSame(true, $tweet->isReply(), 'replyの判定ができるか');
     }
 
+    public function test_mentionを含むTweetを取り込むとisMentionで判定できる()
+    {
+        $tweet = new Tweet("monmon\tmention @twitter これはmentionのtweetです");
+
+        $this->assertSame(true, $tweet->isMention(), 'mentionの判定ができるか');
+    }
+
 }

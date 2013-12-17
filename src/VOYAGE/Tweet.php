@@ -60,6 +60,16 @@ class Tweet
         return false;
     }
 
+    public function isMention()
+    {
+        // note. mentionは@が先頭に来ず、その前に空白がある
+        if (preg_match('/\s@([^\s]+)/', $this->_body)) {
+            return true;
+        }
+
+        return false;
+    }
+
     protected function _pickOutHashTag()
     {
         // note. hash tagは#から始まり、空白の前まで
