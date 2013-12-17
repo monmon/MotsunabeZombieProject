@@ -6,6 +6,13 @@ use \VOYAGE\Tweet;
 
 class TweetTest extends PHPUnit_Framework_TestCase
 {
+    public function test_Tweetを取り込み、bodyだけを返せる()
+    {
+        $tweet = new Tweet("Alice\tあいうえお");
+
+        $this->assertSame('あいうえお', $tweet->getBody(), 'bodyだけを返せるか');
+    }
+
     /**
      * @dataProvider data_tweet
      */

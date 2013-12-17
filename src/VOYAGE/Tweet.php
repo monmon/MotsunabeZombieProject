@@ -18,6 +18,11 @@ class Tweet
         list($this->_screenName, $this->_body) = explode(self::DELIMITER, $str, 2);
     }
 
+    public function getBody()
+    {
+        return $this->_body;
+    }
+
     public function isNormal()
     {
         if (preg_match('/@/', $this->_body)) {
