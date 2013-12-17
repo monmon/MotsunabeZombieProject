@@ -19,15 +19,19 @@ class TweetCategorizer
         if ($this->_tweetObject->isNormal()) {
             return $this->_createCategorizedString('Normal');
         }
+
+        $symbols = array();
         if ($this->_tweetObject->isHashTag()) {
-            return $this->_createCategorizedString('!HashTag');
+            $symbols[] = '!HashTag';
         }
         if ($this->_tweetObject->isReply()) {
-            return $this->_createCategorizedString('Reply');
+            $symbols[] = 'Reply';
         }
         if ($this->_tweetObject->isMention()) {
-            return $this->_createCategorizedString('Mention');
+            $symbols[] = 'Mention';
         }
+
+        return $this->_createCategorizedString(implode(',', $symbols));
     }
 
     protected function _createCategorizedString($category)

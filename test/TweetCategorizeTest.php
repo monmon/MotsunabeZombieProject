@@ -33,4 +33,11 @@ class TweetCategorizerTest extends PHPUnit_Framework_TestCase
 
          $this->assertSame("Mention\tmention @tweet あいうえお", $tweetCategorizer->categorize("Alice\tmention @tweet あいうえお"), 'http://redmine.cs.is.saga-u.ac.jp/issues/4');
     }
+
+    public function test_TweetがhashTagやreplyやmentionなど複数付いていた場合、すべての種類がカンマ区切りで返せる()
+    {
+         $tweetCategorizer = new TweetCategorizer();
+
+         $this->assertSame("!HashTag,Reply,Mention\t@twitter よう！ @mention これはmentionのtweetです #hashtag", $tweetCategorizer->categorize("monmon\t@twitter よう！ @mention これはmentionのtweetです #hashtag"), 'http://redmine.cs.is.saga-u.ac.jp/issues/5');
+    }
 }
