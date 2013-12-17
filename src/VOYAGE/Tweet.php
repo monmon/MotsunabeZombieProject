@@ -34,4 +34,13 @@ class Tweet
 
         return true;
     }
+
+    public function isHashTag()
+    {
+        if (preg_match('/#/', $this->_body)) {
+            return true;
+        }
+
+        return false;
+    }
 }

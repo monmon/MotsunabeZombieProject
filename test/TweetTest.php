@@ -45,4 +45,12 @@ class TweetTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue($actual, '例外が起きたか');
     }
+
+    public function test_hashtagを含むTweetを取り込むとisHashTagで判定できる()
+    {
+        $tweet = new Tweet("monmon\t#hashtab これはhashtagのtweetです");
+
+        $this->assertSame(true, $tweet->isHashTag(), 'hash tagの判定ができるか');
+    }
+
 }
