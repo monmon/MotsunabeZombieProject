@@ -8,6 +8,7 @@ class Tweet
 
     protected $_screenName;
     protected $_body;
+    protected $_hashTag;
 
     public function __construct($str)
     {
@@ -16,6 +17,7 @@ class Tweet
         }
 
         list($this->_screenName, $this->_body) = explode(self::DELIMITER, $str, 2);
+        $this->_hashTag = $this->_pickOutHashTag();
     }
 
     public function getBody()
@@ -28,7 +30,7 @@ class Tweet
         if (preg_match('/@/', $this->_body)) {
             return false;
         }
-        if (preg_match('/#/', $this->_body)) {
+        if ($this->_hashTag) {
             return false;
         }
 
@@ -37,10 +39,20 @@ class Tweet
 
     public function isHashTag()
     {
-        if (preg_match('/#/', $this->_body)) {
+        if ($this->_hashTag) {
             return true;
         }
 
         return false;
+    }
+
+    protected function _pickOutHashTag()
+    {
+        // note. hash tagは#から始まり、空白の前まで
+        if (!preg_match('/#([^\s]+)/', $this->_body, $m)) {
+            return;
+        }
+
+        return $m[1];
     }
 }
