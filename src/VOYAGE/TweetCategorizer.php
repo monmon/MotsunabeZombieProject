@@ -18,5 +18,8 @@ class TweetCategorizer
         if ($tweetObject->isHashTag()) {
             return "!HashTag\t" . $tweetObject->getBody();
         }
+        if ($tweetObject->isReply()) {
+            return "Reply\t" . $tweetObject->getBody();
+        }
     }
 }
